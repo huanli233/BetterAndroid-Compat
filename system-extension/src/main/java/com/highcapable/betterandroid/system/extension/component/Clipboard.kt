@@ -32,7 +32,9 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 
@@ -61,6 +63,7 @@ class ClipDataItemBuilder internal constructor() {
      * @param text the text to add.
      * @param htmlText the html text to add.
      */
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun addHtmlText(text: CharSequence, htmlText: String) {
         mimeTypes.add(ClipDescription.MIMETYPE_TEXT_HTML)
         dataItems.add(ClipData.Item(text, htmlText))
@@ -136,6 +139,7 @@ fun ClipboardManager.copy(text: CharSequence, label: CharSequence? = null) =
  * @param htmlText the html text to copy.
  * @param label the clip data visible label, default is null.
  */
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
 @JvmOverloads
 fun ClipboardManager.copy(text: CharSequence, htmlText: String, label: CharSequence? = null) =
     copy(ClipData.newHtmlText(label, text, htmlText))

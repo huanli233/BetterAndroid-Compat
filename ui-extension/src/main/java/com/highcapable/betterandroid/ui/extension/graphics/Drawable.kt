@@ -30,6 +30,7 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.ShapeDrawable
+import android.os.Build
 import androidx.annotation.CallSuper
 import androidx.annotation.Px
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
@@ -94,11 +95,18 @@ fun GradientDrawable.setPaddingCompat(@Px left: Int, @Px top: Int, @Px right: In
  * @param bottom the bottom (px).
  */
 fun Drawable.setPadding(@Px left: Int, @Px top: Int, @Px right: Int, @Px bottom: Int) {
-    when (this) {
-        is RippleDrawable -> setPadding(left, top, right, bottom)
-        is LayerDrawable -> setPadding(left, top, right, bottom)
-        is ShapeDrawable -> setPadding(left, top, right, bottom)
-        is GradientDrawable -> setPaddingCompat(left, top, right, bottom)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        when (this) {
+            is RippleDrawable -> setPadding(left, top, right, bottom)
+            is LayerDrawable -> setPadding(left, top, right, bottom)
+            is ShapeDrawable -> setPadding(left, top, right, bottom)
+            is GradientDrawable -> setPaddingCompat(left, top, right, bottom)
+        }
+    } else {
+        when (this) {
+            is ShapeDrawable -> setPadding(left, top, right, bottom)
+            is GradientDrawable -> setPaddingCompat(left, top, right, bottom)
+        }
     }
 }
 

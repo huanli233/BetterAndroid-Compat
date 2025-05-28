@@ -29,6 +29,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -245,9 +246,9 @@ private fun LifecycleOwner.fragmentManager() = when (this) {
  */
 private fun LifecycleOwner.requireRootView() = when (this) {
     is FragmentActivity -> findViewById<ViewGroup>(Android_R.id.content)?.let {
-        it.firstChildOrNull<ViewGroup>()?.apply { if (id == View.NO_ID) id = View.generateViewId() } ?: it
+        it.firstChildOrNull<ViewGroup>()?.apply { if (id == View.NO_ID) id = ViewCompat.generateViewId() } ?: it
     } ?: error("FragmentActivity require a root view that is a ViewGroup, also tried android.R.id.content.")
-    is Fragment -> (requireView() as? ViewGroup?)?.apply { if (id == View.NO_ID) id = View.generateViewId() }
+    is Fragment -> (requireView() as? ViewGroup?)?.apply { if (id == View.NO_ID) id = ViewCompat.generateViewId() }
         ?: error("Fragment require a root view that is a ViewGroup.")
     else -> error("The host type must be FragmentActivity or Fragment, but got ${this.javaClass}.")
 }
@@ -264,7 +265,7 @@ private fun Any?.resolveFragmentContainer(default: View): Int {
         is Int -> this
         is View -> this.apply {
             // If the view id is not set, generate a new id.
-            if (id == View.NO_ID) id = View.generateViewId()
+            if (id == View.NO_ID) id = ViewCompat.generateViewId()
         }.id
         null -> default.id
         else -> error("The container view type must be Int or View, but got ${this.javaClass}.")

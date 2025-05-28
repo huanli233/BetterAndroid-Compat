@@ -27,9 +27,11 @@ import android.app.Activity
 import android.content.res.Configuration
 import android.graphics.Point
 import android.graphics.Rect
+import android.os.Build
 import android.view.View
 import android.view.Window
 import androidx.annotation.Px
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.Insets
 import androidx.core.view.DisplayCutoutCompat
 import androidx.core.view.ViewCompat
@@ -120,13 +122,15 @@ class WindowInsetsWrapper private constructor(private val windowInsets: WindowIn
          * Get the navigation bars insets.
          * @return [InsetsWrapper]
          */
-        val navigationBars get() = InsetsWrapper.of(bottom = navigationBarHeight)
+        val navigationBars @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        get() = InsetsWrapper.of(bottom = navigationBarHeight)
 
         /**
          * Get the system bars insets. (include [statusBars] and [navigationBars])
          * @return [InsetsWrapper]
          */
-        val systemBars get() = InsetsWrapper.of(top = statusBarHeight, bottom = navigationBarHeight)
+        val systemBars @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+        get() = InsetsWrapper.of(top = statusBarHeight, bottom = navigationBarHeight)
 
         /**
          * Get the status bar height (px).
@@ -146,12 +150,13 @@ class WindowInsetsWrapper private constructor(private val windowInsets: WindowIn
          */
         @Suppress("DEPRECATION")
         private val navigationBarHeight
-            @Px get() = Point().also { window.windowManager?.defaultDisplay?.getRealSize(it) }.let { point ->
+            @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1) @Px get() = Point().also { window.windowManager?.defaultDisplay?.getRealSize(it) }.let { point ->
                 if (window.context.resources?.configuration?.orientation == Configuration.ORIENTATION_LANDSCAPE)
                     abs(point.x - (window.decorView.findViewById<View>(Android_R.id.content)?.width ?: 0))
                 else abs(Rect().also { window.decorView.getWindowVisibleDisplayFrame(it) }.bottom - point.y)
             }
 
+        @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         override fun toString() =
             "WindowInsetsWrapper.Absolute(statusBars=$statusBars, navigationBars=$navigationBars, systemBars=$systemBars)"
     }

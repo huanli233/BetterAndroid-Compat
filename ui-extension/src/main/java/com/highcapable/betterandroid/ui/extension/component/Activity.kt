@@ -30,6 +30,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.highcapable.betterandroid.system.extension.component.queryLaunchActivitiesForPackage
@@ -68,11 +69,19 @@ inline fun <reified T : Activity> Context.startActivity(
     newTask: Boolean = false,
     options: Bundle? = null,
     intent: Intent.() -> Unit = {}
-) = startActivity(
-    Intent(this, classOf<T>()).apply {
-        if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
-    }.apply(intent), options
-)
+) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+    startActivity(
+        Intent(this, classOf<T>()).apply {
+            if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
+        }.apply(intent), options
+    )
+} else {
+    startActivity(
+        Intent(this, classOf<T>()).apply {
+            if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
+        }.apply(intent)
+    )
+}
 
 /**
  * Start an [Activity] instance [T].
@@ -105,12 +114,21 @@ inline fun Context.startActivity(
     newTask: Boolean = true,
     options: Bundle? = null,
     intent: Intent.() -> Unit = {}
-) = startActivity(
-    Intent().apply {
-        if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
-        component = ComponentName(packageName, activityClass)
-    }.apply(intent), options
-)
+) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+    startActivity(
+        Intent().apply {
+            if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
+            component = ComponentName(packageName, activityClass)
+        }.apply(intent), options
+    )
+} else {
+    startActivity(
+        Intent().apply {
+            if (newTask) flags = flags or Intent.FLAG_ACTIVITY_NEW_TASK
+            component = ComponentName(packageName, activityClass)
+        }.apply(intent)
+    )
+}
 
 /**
  * Start an [Activity] using [ComponentName].
@@ -307,7 +325,8 @@ inline fun Fragment.startActivityOrElse(
  * @param options the [Bundle], default is null.
  * @return [Boolean] whether succeed.
  */
-fun Context.startActivityOrElse(intent: Intent, options: Bundle? = null) = runCatching { startActivity(intent, options) }.isSuccess
+fun Context.startActivityOrElse(intent: Intent, options: Bundle? = null) = runCatching { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) startActivity(intent, options) else startActivity(intent)
+}.isSuccess
 
 /**
  * Start an [Activity].
