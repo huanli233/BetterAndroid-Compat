@@ -23,13 +23,15 @@ package com.highcapable.betterandroid.ui.component.notification.wrapper
 
 import android.media.AudioAttributes
 import android.media.AudioManager
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
-import com.highcapable.betterandroid.ui.component.R
 import com.highcapable.betterandroid.ui.component.notification.NotificationBuilder
 import com.highcapable.betterandroid.ui.component.notification.NotificationChannelBuilder
 import com.highcapable.betterandroid.ui.component.notification.proxy.INotificationWrapper
 import com.highcapable.betterandroid.ui.component.notification.type.NotificationImportance
+import com.huanli233.betterandroid.compat.ui.component.R
 
 /**
  * A wrapper of [NotificationBuilder].
@@ -62,6 +64,7 @@ class NotificationWrapper internal constructor(internal var builder: Notificatio
      * @receiver the [AudioAttributes] type.
      * @return [Int]
      */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun AudioAttributes?.toStreamType() = when (this?.usage) {
         AudioAttributes.USAGE_ALARM -> AudioManager.STREAM_ALARM
         AudioAttributes.USAGE_MEDIA -> AudioManager.STREAM_MUSIC

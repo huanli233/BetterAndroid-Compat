@@ -28,6 +28,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Outline
 import android.graphics.Point
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
@@ -39,6 +40,7 @@ import android.view.ViewOutlineProvider
 import android.view.ViewPropertyAnimator
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.Px
+import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -52,10 +54,10 @@ import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
 import androidx.core.view.updatePadding
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
-import com.highcapable.betterandroid.ui.extension.R
 import com.highcapable.yukireflection.factory.buildOf
 import com.highcapable.yukireflection.factory.classOf
 import com.highcapable.yukireflection.type.java.IntType
+import com.huanli233.betterandroid.compat.ui.extension.R
 
 /**
  * Get the view's location on screen.
@@ -621,6 +623,7 @@ fun View.indexOfInParent() = parentOrNull()?.indexOfChild(this) ?: -1
  * @receiver [V]
  * @param provider the outline provider callback.
  */
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 inline fun <reified V : View> V.outlineProvider(crossinline provider: (view: V, outline: Outline) -> Unit) {
     outlineProvider = object : ViewOutlineProvider() {
         override fun getOutline(view: View, outline: Outline) {

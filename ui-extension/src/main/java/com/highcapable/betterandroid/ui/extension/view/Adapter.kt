@@ -26,7 +26,7 @@ package com.highcapable.betterandroid.ui.extension.view
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
-import com.highcapable.betterandroid.ui.extension.generated.BetterAndroidProperties
+import com.huanli233.betterandroid.compat.ui.extension.generated.BetterAndroidProperties
 
 /**
  * Notify that all items in the adapter have been inserted.

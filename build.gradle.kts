@@ -9,8 +9,6 @@ plugins {
     autowire(libs.plugins.kotlin.android) apply false
     autowire(libs.plugins.android.application) apply false
     autowire(libs.plugins.android.library) apply false
-    autowire(libs.plugins.jetbrains.compose) apply false
-    autowire(libs.plugins.compose.compiler) apply false
     autowire(libs.plugins.kotlin.dokka) apply false
     autowire(libs.plugins.maven.publish) apply false
 }
@@ -33,9 +31,7 @@ libraryProjects {
             }
         }
         configure<MavenPublishBaseExtension> {
-            if (name == Libraries.COMPOSE_EXTENSION || name == Libraries.COMPOSE_MULTIPLATFORM)
-                configure(KotlinMultiplatform(javadocJar = JavadocJar.Empty()))
-            else configure(AndroidSingleVariantLibrary(publishJavadocJar = false))
+            configure(AndroidSingleVariantLibrary(publishJavadocJar = false))
         }
     }
     tasks.withType<DokkaTask>().configureEach {
@@ -61,9 +57,7 @@ fun libraryProjects(action: Action<in Project>) {
     val libraries = listOf(
         Libraries.UI_COMPONENT,
         Libraries.UI_EXTENSION,
-        Libraries.SYSTEM_EXTENSION,
-        Libraries.COMPOSE_EXTENSION,
-        Libraries.COMPOSE_MULTIPLATFORM
+        Libraries.SYSTEM_EXTENSION
     )
     allprojects { if (libraries.contains(name)) action.execute(this) }
 }
@@ -72,6 +66,4 @@ object Libraries {
     const val UI_COMPONENT = "ui-component"
     const val UI_EXTENSION = "ui-extension"
     const val SYSTEM_EXTENSION = "system-extension"
-    const val COMPOSE_EXTENSION = "compose-extension"
-    const val COMPOSE_MULTIPLATFORM = "compose-multiplatform"
 }

@@ -25,12 +25,12 @@ import android.util.Log
 import android.view.Window
 import com.highcapable.betterandroid.system.extension.tool.SystemKind
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
-import com.highcapable.betterandroid.ui.component.generated.BetterAndroidProperties
 import com.highcapable.yukireflection.factory.current
 import com.highcapable.yukireflection.factory.field
 import com.highcapable.yukireflection.factory.method
 import com.highcapable.yukireflection.factory.toClassOrNull
 import com.highcapable.yukireflection.type.java.IntType
+import com.huanli233.betterandroid.compat.ui.component.generated.BetterAndroidProperties
 
 /**
  * System bars compatible adaptation tool for various devices and systems.

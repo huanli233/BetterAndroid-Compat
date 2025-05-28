@@ -29,13 +29,13 @@ import android.view.Window
 import com.highcapable.betterandroid.system.extension.tool.SystemKind
 import com.highcapable.betterandroid.system.extension.tool.SystemProperties
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
-import com.highcapable.betterandroid.ui.component.generated.BetterAndroidProperties
 import com.highcapable.betterandroid.ui.component.insets.InsetsWrapper
 import com.highcapable.betterandroid.ui.extension.component.base.toPx
 import com.highcapable.yukireflection.factory.method
 import com.highcapable.yukireflection.factory.toClassOrNull
 import com.highcapable.yukireflection.type.android.WindowClass
 import com.highcapable.yukireflection.type.java.IntType
+import com.huanli233.betterandroid.compat.ui.component.generated.BetterAndroidProperties
 
 /**
  * Window insets wrapper's compatible adaptation tool for various devices and systems.

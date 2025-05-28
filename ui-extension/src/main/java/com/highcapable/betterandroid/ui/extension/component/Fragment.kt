@@ -36,8 +36,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.LifecycleOwner
-import com.highcapable.betterandroid.ui.extension.generated.BetterAndroidProperties
 import com.highcapable.betterandroid.ui.extension.view.firstChildOrNull
+import com.huanli233.betterandroid.compat.ui.extension.generated.BetterAndroidProperties
 import android.R as Android_R
 
 /**

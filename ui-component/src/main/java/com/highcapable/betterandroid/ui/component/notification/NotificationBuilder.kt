@@ -37,7 +37,6 @@ import androidx.core.content.LocusIdCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.highcapable.betterandroid.system.extension.tool.SystemVersion
-import com.highcapable.betterandroid.ui.component.R
 import com.highcapable.betterandroid.ui.component.notification.factory.createNotification
 import com.highcapable.betterandroid.ui.component.notification.proxy.INotificationBuilder
 import com.highcapable.betterandroid.ui.component.notification.wrapper.NotificationChannelWrapper

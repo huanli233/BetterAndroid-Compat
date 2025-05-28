@@ -27,6 +27,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,6 @@ import com.highcapable.betterandroid.ui.component.activity.AppComponentActivity
 import com.highcapable.betterandroid.ui.component.activity.AppViewsActivity
 import com.highcapable.betterandroid.ui.component.fragment.AppBindingFragment
 import com.highcapable.betterandroid.ui.component.fragment.AppViewsFragment
-import com.highcapable.betterandroid.ui.component.generated.BetterAndroidProperties
 import com.highcapable.betterandroid.ui.component.insets.InsetsWrapper
 import com.highcapable.betterandroid.ui.component.insets.WindowInsetsWrapper
 import com.highcapable.betterandroid.ui.component.insets.factory.handleOnWindowInsetsChanged
@@ -58,6 +58,7 @@ import com.highcapable.betterandroid.ui.extension.component.base.isUiInNightMode
 import com.highcapable.betterandroid.ui.extension.graphics.isBrightColor
 import com.highcapable.betterandroid.ui.extension.graphics.mixColorOf
 import com.highcapable.betterandroid.ui.extension.view.updateLayoutParams
+import com.huanli233.betterandroid.compat.ui.component.generated.BetterAndroidProperties
 import android.R as Android_R
 
 /**
@@ -269,8 +270,8 @@ class SystemBarsController private constructor(private val window: Window) {
         }
         // Save the original system bars params.
         originalSystemBarParams = SystemBarParams(
-            statusBarColor = window.statusBarColor,
-            navigationBarColor = window.navigationBarColor,
+            statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.statusBarColor else 0,
+            navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else 0,
             navigationBarDividerColor = navigationBarDividerColor,
             isStatusBarContrastEnforced = isStatusBarContrastEnforced,
             isNavigationBarContrastEnforced = isNavigationBarContrastEnforced,
@@ -397,10 +398,12 @@ class SystemBarsController private constructor(private val window: Window) {
                 // as the system does not support inverting colors.
                 // Some systems, such as MIUI based on Android 5,
                 // will automatically adapt to their own set of inverse color schemes.
-                window.statusBarColor =
-                    if (SystemVersion.isLowTo(SystemVersion.M) && !systemBarsCompat.isLegacySystem && lightApperance)
-                        mixColorOf(backgroundColor, Color.BLACK)
-                    else backgroundColor
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.statusBarColor =
+                        if (SystemVersion.isLowTo(SystemVersion.M) && !systemBarsCompat.isLegacySystem && lightApperance)
+                            mixColorOf(backgroundColor, Color.BLACK)
+                        else backgroundColor
+                }
                 if (systemBarsCompat.isLegacySystem) systemBarsCompat.setStatusBarDarkMode(darkContent)
                 else rootInsetsController?.isAppearanceLightStatusBars = darkContent
             }
@@ -408,10 +411,12 @@ class SystemBarsController private constructor(private val window: Window) {
                 enableDrawsSystemBarBackgrounds()
                 // Below Android 8.0 will add a transparent mask,
                 // because the system does not support inverting colors.
-                window.navigationBarColor =
-                    if (SystemVersion.isLowTo(SystemVersion.O) && lightApperance)
-                        mixColorOf(backgroundColor, Color.BLACK)
-                    else backgroundColor
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    window.navigationBarColor =
+                        if (SystemVersion.isLowTo(SystemVersion.O) && lightApperance)
+                            mixColorOf(backgroundColor, Color.BLACK)
+                        else backgroundColor
+                }
                 rootInsetsController?.isAppearanceLightNavigationBars = darkContent
             }
             else -> {}
@@ -420,11 +425,15 @@ class SystemBarsController private constructor(private val window: Window) {
 
     /** Enable to draws system bar backgrounds if not. */
     private fun enableDrawsSystemBarBackgrounds() {
-        @Suppress("DEPRECATION")
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        @Suppress("DEPRECATION")
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            @Suppress("DEPRECATION")
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            @Suppress("DEPRECATION")
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            }
+        }
     }
 
     /**
@@ -441,8 +450,10 @@ class SystemBarsController private constructor(private val window: Window) {
         // Restore to default sets.
         originalSystemBarParams?.also {
             WindowCompat.setDecorFitsSystemWindows(window, true)
-            window.statusBarColor = it.statusBarColor
-            window.navigationBarColor = it.navigationBarColor
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.statusBarColor = it.statusBarColor
+                window.navigationBarColor = it.navigationBarColor
+            }
             SystemVersion.require(SystemVersion.Q) {
                 window.isStatusBarContrastEnforced = it.isStatusBarContrastEnforced
                 window.isNavigationBarContrastEnforced = it.isNavigationBarContrastEnforced

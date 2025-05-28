@@ -14,6 +14,8 @@ android {
         versionName = property.project.samples.app.versionName
         versionCode = property.project.samples.app.versionCode
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

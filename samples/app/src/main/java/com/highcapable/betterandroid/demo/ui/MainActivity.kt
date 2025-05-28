@@ -22,8 +22,8 @@
 package com.highcapable.betterandroid.demo.ui
 
 import android.os.Bundle
-import com.highcapable.betterandroid.demo.databinding.ActivityMainBinding
 import com.highcapable.betterandroid.ui.component.activity.AppBindingActivity
+import com.huanli233.betterandroid.compat.demo.databinding.ActivityMainBinding
 
 class MainActivity : AppBindingActivity<ActivityMainBinding>() {
 
