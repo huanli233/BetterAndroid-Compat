@@ -19,7 +19,7 @@
  *
  * This file is created by fankes on 2022/11/3.
  */
-@file:Suppress("unused", "FunctionName", "MemberVisibilityCanBePrivate", "NON_PUBLIC_CALL_FROM_PUBLIC_INLINE", "UNCHECKED_CAST")
+@file:Suppress("unused", "FunctionName", "MemberVisibilityCanBePrivate", "UNCHECKED_CAST")
 @file:JvmName("ViewBindingUtils")
 
 package com.highcapable.betterandroid.ui.extension.binding
@@ -145,7 +145,9 @@ inline fun <reified VB : ViewBinding> Fragment.viewBinding(parent: ViewGroup? = 
  * A [ViewBinding] builder.
  * @param bindingClass the [ViewBinding] class.
  */
-class ViewBindingBuilder<VB : ViewBinding> internal constructor(private val bindingClass: Class<VB>) {
+class ViewBindingBuilder<VB : ViewBinding> @PublishedApi internal constructor(
+    private val bindingClass: Class<VB>
+) {
 
     companion object {
 
@@ -287,7 +289,7 @@ class ViewBindingBuilder<VB : ViewBinding> internal constructor(private val bind
  * @param parent the parent view.
  * @param attachToParent whether to attach the parent view.
  */
-class ViewBindingDelegate<VB : ViewBinding> internal constructor(
+class ViewBindingDelegate<VB : ViewBinding> @PublishedApi internal constructor(
     private val bindingClass: Class<VB>,
     private val layoutInflater: () -> LayoutInflater,
     private val parent: ViewGroup?,

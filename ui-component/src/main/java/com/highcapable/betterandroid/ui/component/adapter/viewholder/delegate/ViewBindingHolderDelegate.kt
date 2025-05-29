@@ -32,7 +32,9 @@ import com.highcapable.betterandroid.ui.extension.view.layoutInflater
  * [ViewBinding] type view holder delegate.
  * @param builder the [ViewBindingBuilder] for inflate the view.
  */
-class ViewBindingHolderDelegate<VB : ViewBinding> internal constructor(private val builder: ViewBindingBuilder<VB>) : ViewHolderDelegate<VB>() {
+class ViewBindingHolderDelegate<VB : ViewBinding> @PublishedApi internal constructor(
+    private val builder: ViewBindingBuilder<VB>
+) : ViewHolderDelegate<VB>() {
 
     override fun create(context: Context, parent: ViewGroup?) = builder.inflate(context.layoutInflater, parent, attachToParent = false)
     override fun getView(instance: VB) = instance.root

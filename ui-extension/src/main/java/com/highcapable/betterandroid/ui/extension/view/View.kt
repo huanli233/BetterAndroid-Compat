@@ -19,7 +19,7 @@
  *
  * This file is created by fankes on 2023/10/25.
  */
-@file:Suppress("unused", "FunctionName", "NON_PUBLIC_CALL_FROM_PUBLIC_INLINE", "EXTENSION_SHADOWED_BY_MEMBER")
+@file:Suppress("unused", "FunctionName", "EXTENSION_SHADOWED_BY_MEMBER")
 @file:JvmName("ViewUtils")
 
 package com.highcapable.betterandroid.ui.extension.view
@@ -764,4 +764,5 @@ const val LayoutParamsMatchParent = ViewGroup.LayoutParams.MATCH_PARENT
 const val LayoutParamsWrapContent = ViewGroup.LayoutParams.WRAP_CONTENT
 
 /** The unspecified layout params value. */
-private const val LayoutParamsUnspecified = LayoutParamsWrapContent - 1
+@PublishedApi
+internal const val LayoutParamsUnspecified = LayoutParamsWrapContent - 1

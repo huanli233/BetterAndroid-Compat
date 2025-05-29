@@ -64,7 +64,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        minSdk = property.project.android.minSdk
+        minSdk = property.project.android.compose.minSdk
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

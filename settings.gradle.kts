@@ -28,7 +28,11 @@ sweetProperty {
         ":ui-extension",
         ":system-extension"
     ) { sourcesCode { className = rootProject.name } }
+    project(
+        ":compose-extension",
+        ":compose-multiplatform"
+    ) { sourcesCode { isEnable = false } }
 }
 rootProject.name = "BetterAndroid"
 include(":samples:app")
-include(":ui-component", ":ui-extension", ":system-extension")
+include(":ui-component", ":ui-extension", ":system-extension", ":compose-extension", ":compose-multiplatform")

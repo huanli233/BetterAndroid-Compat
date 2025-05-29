@@ -19,7 +19,7 @@
  *
  * This file is created by fankes on 2022/11/2.
  */
-@file:Suppress("unused", "FunctionName", "DEPRECATION", "NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
+@file:Suppress("unused", "FunctionName", "DEPRECATION")
 @file:JvmName("CommonAdapterUtils")
 
 package com.highcapable.betterandroid.ui.component.adapter.factory
